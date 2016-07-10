@@ -41,10 +41,12 @@
 		          .split("\r").join("\\'")
 		      + "');}return p.join('');");
 		   
-		    // Provide some basic currying to the user
+		    // Provide some basic currying（局部套用） to the user
 		    return data ? fn( data ) : fn;
+
 		  };
 		})();
+
 
 	</script>
 </head>
@@ -54,7 +56,7 @@
 			<a id="J_TopNav" class="top-nav"></a>
 			<h1>豆瓣电影</h1>
 		</header><!-- /header -->
-		<section class="ongoing-hot sec">
+		<section class="ongoing-hot sec" id="J_OnGoing">
 			<a href="https://movie.douban.com/nowplaying/" class="kind clear">
 				<span>正在放映</span>
 				<span></span>
@@ -62,32 +64,47 @@
 			<script type="text/html" id="J_OngoingListTmpl">
 				<ul id="J_OngoingList" class="list">
 
-					<% for(var i in OngoingList){ %>
+					<% for(var i in obj){ %>
 
 						<li>
-							<a data-id="<%=OngoingList[i].id%>" class="list-info" href="<%=OngoingList[i].alt%>">
-								<img class="file-img" src="<%=OngoingList[i].images.small%>">
-								<span class="file-name"><%=OngoingList[i].title%></span>
-								<span class="file-score">score(<%=OngoingList[i].rating.stars%></span>
+							<a data-id="<%=obj[i].id%>" class="list-info" href="<%=obj[i].alt%>">
+								<img class="file-img" src="<%=obj[i].images.small%>">
+								<span class="file-name"><%=obj[i].title%></span>
+								<span class="file-score">score(<%=obj[i].rating.stars%>)</span>
 							</a>
-							<a class="list-choose" href="https://movie.douban.com/subject/"'+<%=OngoingList[i].id%>+'"/cinema/">选座购票</a>
+							<a class="list-choose" href="https://movie.douban.com/subject/"'+<%=obj[i].id%>+'"/cinema/">选座购票</a>
 						</li>
 
 					<% } %>
-					
+
 				</ul>
 
 			</script>
 			
 			
 		</section><!-- /正在热映 -->   
-		<section class="recent-hot sec">
+		<section class="recent-hot sec" id="J_Recent">
 			<a href="https://movie.douban.com/chart" class="kind clear">
 				<span>近期热门</span>
 				<span></span>
 			</a>
-			<ul id="J_RecentList" class="list">
-			</ul>
+			<script type="text/html" id="J_RecentListTmpl">
+				<ul id="J_RecentList" class="list">
+					
+						<% for(var i in obj){ %>
+
+						<li>
+							<a data-id="<%=obj[i].id%>" class="list-info" href="<%=obj[i].alt%>">
+								<img class="file-img" src="<%=obj[i].images.small%>">
+								<span class="file-name"><%=obj[i].title%></span>
+							</a>
+						</li>
+
+						<% } %>
+
+				</ul>
+			</script>
+			
 		</section><!-- /近期热门 -->
 		<section class="hot-bean sec">
 			<a href="#" class="kind clear">

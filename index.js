@@ -11,8 +11,9 @@ $(function(){
 		},
 		success:function(data){
 			// 获取三个正在上映的电影()
-			var OngoingList=(data.subjects).slice(0,3);
-			tmpl("J_OngoingListTmpl",OngoingList);
+			var obj=data.subjects.slice(0,3);
+			// tmpl("J_OngoingListTmpl",obj);
+			$("#J_OnGoing").append(tmpl("J_OngoingListTmpl",obj));
 
 		}
 	})
@@ -24,13 +25,11 @@ $(function(){
 		dataType:'jsonp',
 		jsonp:'jsonpcallback',
 		success:function(data){
-			var totalInfo=(data.subjects).slice(0,3);
-			var htm="";
-			for(var i in totalInfo){
-				var list=totalInfo[i].subject;
-				htm+='<li><a href="list.alt" class="list-info"><img class="file-img" src="'+list.images.small+'"><span class="file-name">'+list.title+'</span></a></li>';
-			}
-			$("#J_RecentList").html(htm);
+
+			var obj=data.subjects.slice(0,3);
+			
+			$("#J_Recent").append(tmpl("J_RecentListTmpl",obj));
+			
 		}
 	})
 
@@ -46,31 +45,32 @@ $(function(){
 	})
 
 })
-function score(num){
-	var t=(parseInt(num)/100.0).toFixed(2);
-	var htm='';
-	if(t<0.1){
-		htm='<span class="rating-stars"><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
-	}else if(t>0.1&&t<0.2){
-		htm='<span class="rating-stars"><span class="rating-star rating-star-small-half"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
-	}else if(t>=0.2&&t<0.3){
-		htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
-	}else if(t>=0.3&&t<0.4){
-		htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-half"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
-	}else if(t>=0.4&&t<0.5){
-		htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
-	}else if(t>=0.5&&t<0.6){
-		htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-half"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
-	}else if(t>=0.6&&t<0.7){
-		htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
-	}else if(t>=0.7&&t<0.8){
-		htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-half"></span><span class="rating-star rating-star-small-gray"></span></span>';
-	}else if(t>=0.8&&t<0.9){
-		htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-gray"></span></span>';
-	}else if(t>=0.9&&t<1){
-		htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-half"></span></span>';
-	}else if(t==1){
-		htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span></span>';
-	}
-	return htm;
-}
+// 评分函数
+		function score(num){
+			var t=(parseInt(num)/100.0).toFixed(2);
+			var htm='';
+			if(t<0.1){
+				htm='<span class="rating-stars"><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
+			}else if(t>0.1&&t<0.2){
+				htm='<span class="rating-stars"><span class="rating-star rating-star-small-half"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
+			}else if(t>=0.2&&t<0.3){
+				htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
+			}else if(t>=0.3&&t<0.4){
+				htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-half"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
+			}else if(t>=0.4&&t<0.5){
+				htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
+			}else if(t>=0.5&&t<0.6){
+				htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-half"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
+			}else if(t>=0.6&&t<0.7){
+				htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-gray"></span><span class="rating-star rating-star-small-gray"></span></span>';
+			}else if(t>=0.7&&t<0.8){
+				htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-half"></span><span class="rating-star rating-star-small-gray"></span></span>';
+			}else if(t>=0.8&&t<0.9){
+				htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-gray"></span></span>';
+			}else if(t>=0.9&&t<1){
+				htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-half"></span></span>';
+			}else if(t==1){
+				htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span></span>';
+			}
+			return htm;
+		}
