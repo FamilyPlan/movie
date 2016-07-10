@@ -11,13 +11,9 @@ $(function(){
 		},
 		success:function(data){
 			// 获取三个正在上映的电影()
-			var totalInfo=(data.subjects).slice(0,3);
-			var htm="";
-			for(var i in totalInfo){
-				var list=totalInfo[i];
-				htm+='<li><a data-id="'+list.id+'" class="list-info" href="'+list.alt+'"><img class="file-img" src="'+list.images.small+'"><span class="file-name">'+list.title+'</span><span class="file-score">'+score(list.rating.stars)+'</span></a><a class="list-choose" href="https://movie.douban.com/subject/"'+list.id+'"/cinema/">选座购票</a></li>';
-			}
-			$("#J_OngoingList").html(htm);
+			var OngoingList=(data.subjects).slice(0,3);
+			tmpl("J_OngoingListTmpl",OngoingList);
+
 		}
 	})
 	

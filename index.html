@@ -1,4 +1,4 @@
-<html>
+<html lang="zh">
 <head>
 	<title>豆瓣电影</title>
 	<meta charset="utf-8">
@@ -8,6 +8,45 @@
 	<meta content="telephone=no" name="format-detection">
 	<meta content="email=no" name="format-detection">
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript">
+		// 模板引擎
+		// Simple JavaScript Templating（讲解用法：http://www.cnblogs.com/dolphinX/p/3489269.html）
+		// John Resig - hhttp://ejohn.org/blog/javascript-micro-templating/ - MIT Licensed
+		(function(){
+		  var cache = {};
+		 
+		  this.tmpl = function tmpl(str, data){
+		    // Figure out if we're getting a template, or if we need to
+		    // load the template - and be sure to cache the result.
+		    var fn = !/\W/.test(str) ?
+		      cache[str] = cache[str] ||
+		        tmpl(document.getElementById(str).innerHTML) :
+		     
+		      // Generate a reusable function that will serve as a template
+		      // generator (and which will be cached).
+		      new Function("obj",
+		        "var p=[],print=function(){p.push.apply(p,arguments);};" +
+		       
+		        // Introduce the data as local variables using with(){}
+		        "with(obj){p.push('" +
+		       
+		        // Convert the template into pure JavaScript
+		        str
+		          .replace(/[\r\t\n]/g, " ")
+		          .split("<%").join("\t")
+		          .replace(/((^|%>)[^\t]*)'/g, "$1\r")
+		          .replace(/\t=(.*?)%>/g, "',$1,'")
+		          .split("\t").join("');")
+		          .split("%>").join("p.push('")
+		          .split("\r").join("\\'")
+		      + "');}return p.join('');");
+		   
+		    // Provide some basic currying to the user
+		    return data ? fn( data ) : fn;
+		  };
+		})();
+
+	</script>
 </head>
 <body>
 	<div class="main" id="J_Main">
@@ -20,8 +59,27 @@
 				<span>正在放映</span>
 				<span></span>
 			</a>
-			<ul id="J_OngoingList" class="list">
-			</ul>
+			<script type="text/html" id="J_OngoingListTmpl">
+				<ul id="J_OngoingList" class="list">
+
+					<% for(var i in OngoingList){ %>
+
+						<li>
+							<a data-id="<%=OngoingList[i].id%>" class="list-info" href="<%=OngoingList[i].alt%>">
+								<img class="file-img" src="<%=OngoingList[i].images.small%>">
+								<span class="file-name"><%=OngoingList[i].title%></span>
+								<span class="file-score">score(<%=OngoingList[i].rating.stars%></span>
+							</a>
+							<a class="list-choose" href="https://movie.douban.com/subject/"'+<%=OngoingList[i].id%>+'"/cinema/">选座购票</a>
+						</li>
+
+					<% } %>
+					
+				</ul>
+
+			</script>
+			
+			
 		</section><!-- /正在热映 -->   
 		<section class="recent-hot sec">
 			<a href="https://movie.douban.com/chart" class="kind clear">
@@ -37,7 +95,7 @@
 				<span></span>
 			</a>
 			<div>目前还没有内容</div>
-		</section><!-- /热门豆列 -->
+		</section><!-- /热门豆列 -->	
 		<section class="popular-comment sec">
 			<a href="https://movie.douban.com/review/best/" class="kind clear">
 				<span>最受欢迎的影评</span>
