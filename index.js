@@ -25,11 +25,10 @@ $(function(){
 		dataType:'jsonp',
 		jsonp:'jsonpcallback',
 		success:function(data){
-
 			var obj=data.subjects.slice(0,3);
 			
 			$("#J_Recent").append(tmpl("J_RecentListTmpl",obj));
-			
+
 		}
 	})
 
