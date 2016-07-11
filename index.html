@@ -1,0 +1,194 @@
+<html lang="zh">
+<head>
+	<title>豆瓣电影</title>
+	<meta charset="utf-8">
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<meta content="email=no" name="format-detection">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript">
+		// 模板引擎
+		// Simple JavaScript Templating（讲解用法：http://www.cnblogs.com/dolphinX/p/3489269.html）
+		// John Resig - hhttp://ejohn.org/blog/javascript-micro-templating/ - MIT Licensed
+		(function(){var cache={};this.tmpl=function tmpl(str,data){var fn=!/\W/.test(str)?cache[str]=cache[str]||tmpl(document.getElementById(str).innerHTML):new Function("obj","var p=[],print=function(){p.push.apply(p,arguments);};"+"with(obj){p.push('"+str.replace(/[\r\t\n]/g," ").split("<%").join("\t").replace(/((^|%>)[^\t]*)'/g,"$1\r").replace(/\t=(.*?)%>/g,"',$1,'").split("\t").join("');").split("%>").join("p.push('").split("\r").join("\\'")+"');}return p.join('');");return data?fn(data):fn;};})();
+	</script>
+</head>
+<body>
+	<div class="main" id="J_Main">
+		<header id="header" class="header">
+			<a id="J_TopNav" class="top-nav"></a>
+			<h1>豆瓣电影</h1>
+		</header><!-- /header -->
+		<section class="ongoing-hot sec" id="J_OnGoing">
+			<a href="https://movie.douban.com/nowplaying/" class="kind clear">
+				<span>正在放映</span>
+				<span></span>
+			</a>
+			<script type="text/html" id="J_OngoingListTmpl">
+				<ul id="J_OngoingList" class="list">
+
+					<% for(var i in obj){ %>
+
+						<li>
+							<a data-id="<%=obj[i].id%>" class="list-info" href="<%=obj[i].alt%>">
+								<img class="file-img" src="<%=obj[i].images.small%>">
+								<span class="file-name"><%=obj[i].title%></span>
+								<span class="file-score" data-score="<%=obj[i].rating.stars%>"></span>
+							</a>
+							<a class="list-choose" href="https://movie.douban.com/subject/"'+<%=obj[i].id%>+'"/cinema/">选座购票</a>
+						</li>
+
+					<% } %>
+
+				</ul>
+
+			</script>
+			
+			
+		</section><!-- /正在热映 -->   
+		<section class="recent-hot sec" id="J_Recent">
+			<a href="https://movie.douban.com/chart" class="kind clear">
+				<span>近期热门</span>
+				<span></span>
+			</a>
+			<script type="text/html" id="J_RecentListTmpl">
+				<ul id="J_RecentList" class="list">
+					
+						<% for(var i in obj){ %>
+
+						<li>
+							<a data-id="<%=obj[i].subject.id%>" class="list-info" href="<%=obj[i].alt%>">
+								<img class="file-img" src="<%=obj[i].subject.images.small%>">
+								<span class="file-name"><%=obj[i].subject.title%></span>
+							</a>
+						</li>
+
+						<% } %>
+
+				</ul>
+			</script>
+			
+		</section><!-- /近期热门 -->
+		<section class="hot-bean sec">
+			<a href="#" class="kind clear">
+				<span>热门豆列</span>
+				<span></span>
+			</a>
+			<div>目前还没有内容</div>
+		</section><!-- /热门豆列 -->	
+		<section class="popular-comment sec">
+			<a href="https://movie.douban.com/review/best/" class="kind clear">
+				<span>最受欢迎的影评</span>
+				<span></span>
+			</a>
+			<ul id="J_ComtList" class="comt-list">
+				<li>
+					<a href="" class="comt-wrap">
+						<div class="cont">
+							<div class="img">
+								<img src="./img/1.jpg" alt="">
+							</div>
+							<div class="cont-detail">
+								<h3>这个脑袋不太超</h3>
+								<div>
+								这部片子有一个很炫酷的中文译名，曾经一度让我以为有个与众不同新鲜炫酷的立意，或者多么烧脑细节的剧情。可惜，看简介发现是个再平常不过的记忆移植的设定，很常见的套路，剧情细节也没有很出众。名字翻译的朴实一点，别把我的胃口吊那么高好嘛。
+
+								剧情线的细节一般，西班牙boss如此神勇，CIA太废柴。当然也说不上什么大bug。开篇、发展、结局都是很常规，属于看了简介就能知道结局的片子，没什么意料之外可言。感情线描写得恰到好处，男主对女主莫名的关注，渐渐产生感觉，到最后拼死保护，一切都顺其自然。额，他们就是完全不介意什么原配现任这些事，对于美国人心比较大比较开放这个事实我已经习惯了。
+
+								科斯特纳大叔的演技没问题，男主这种奇葩设定也hold得住，罪犯被洗脑开始做好人一点不违和，不过遗憾的是对于移植记忆后原本行为和记忆产生行为的冲突刻画不是很细致，仅仅是男主几次头痛就完了，有点遗憾，我本来期待更深刻的展现的。演中情局头头的那位是哈利波特里的小天狼星，也挺带感的。女主更是十万分满意。从速度激情系列就让我喜欢的这位以色列美女果然没让我失望，脸蛋身材都是一流，给这部影片增加了感性和看点，让情感戏没那么枯燥。其实她和男主看起来还是蛮搭的，成熟大叔配性感美女^_^
+
+								中规中矩的剧情，搭配上几个不错的演员，最后出的成品还是值得一看的，整部影片算是个合格的科幻片。本来只值三星，但是为了盖尔加朵，我私心又多加了一颗星。
+								</div>
+							</div>
+						</div>
+						<div class="comt">
+							<span class="comt-author">奔跑忘记忧伤</span>
+							<span>评论</span>
+							<span class="comt-cite">《超脑48小时》</span>
+							<span class="comt-score"></span>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</section><!-- /最受欢迎的影评 -->
+		<section class="other-nav sec">
+			<ul class="other-list">
+				<li>
+					<a href="https://movie.douban.com/cinemas/108288/" title="">本地影院</a>
+				</li>
+				<li>
+					<a href="https://movie.douban.com/tag/" title="">影片分类</a>
+				</li>
+				<li>
+					<a href="https://movie.douban.com/chart" title="">电影排行榜</a>
+				</li>
+			</ul>
+		</section><!-- /其他栏目导航栏 -->
+		<footer class="footer">
+			<div class="copyright">© 2005－2016 douban.com, all rights reserved </div>
+			<div class="switch-style">
+	            <a href="#" class="back-to-top">回顶部</a>
+	            <span class="seperator">·</span>
+	            <span>移动风格</span>
+	            <span class="seperator">·</span>
+	            <a href="https://m.douban.com" class="link">去新版</a>
+	            <span class="seperator">·</span>
+	            <a href="#" class="switch-to-desktop">桌面风格</a>
+        	</div>
+		</footer>
+	</div>
+	<div class="slide" id="J_Slide">
+		<header class="slide-h">
+			<h2>
+				<img src="https://img3.doubanio.com/pics/cardkit/logo.png" width="50" alt="douban">
+			</h2>
+			<a href="https://www.douban.com/accounts/login" class="login-sign">登录/注册</a>
+			<a href="https://movie.douban.com/subject_search" class="search-sign" id="J_SearchSign">电影、影人、影院、电视剧</a>
+		</header><!-- /header -->
+		<section class="movie">
+			<h4>电影</h4>
+			<ul class="kind-list">
+				<li>
+					<a href="https://movie.douban.com">电影首页</a>
+				</li>
+				<li>
+					<a href="https://movie.douban.com/nowplaying/">影讯&购票</a>
+				</li>
+				<li>
+					<a href="https://movie.douban.com/tv/">电视剧</a>
+				</li>
+				<li>
+					<a href="https://movie.douban.com/chart">排行榜</a>
+				</li>
+				<li>
+					<a href="https://movie.douban.com/tag/">分类</a>
+				</li>
+				<li>
+					<a href="https://movie.douban.com/review/best/">影评</a>
+				</li>
+				<li>
+					<a href="https://movie.douban.com/trailers">预告片</a>
+				</li>
+				<li>
+					<a href="https://movie.douban.com/askmatrix/hot_questions/all">问答</a>
+				</li>
+			</ul>
+		</section>
+		<section class="movie">
+			<h4></h4>
+			<ul class="kind-list">
+				<li>
+					<a href="">切换至桌面风格</a>
+				</li>
+				<li>
+					<a href="https://www.douban.com/j/cardkit/feedback?server=sindar20b-docker">使用反馈</a>
+				</li>
+			</ul>
+		</section>
+	</div>
+</body>
+<script src="zepto.min.js" type="text/javascript"></script>
+<script src="index.js" type="text/javascript"></script>
+</html>
