@@ -1,49 +1,63 @@
 $(function(){
-	
-	// 正在放映
-	$.ajax({
-		url:'https://api.douban.com/v2/movie/in_theaters',
-		type:'GET',
-		dataType:'jsonp',
-		jsonp:'jsonpcallback',
-		data:{
-			city:'北京'
-		},
-		success:function(data){
-			// 获取三个正在上映的电影()
-			var obj=data.subjects.slice(0,3);
-			// tmpl("J_OngoingListTmpl",obj);
-			$("#J_OnGoing").append(tmpl("J_OngoingListTmpl",obj));
+	main.init();
+});
+var main={
+	init:function(){
+		this.render();
+		this.bind();
+	},
+	render:function(){
+		// 正在放映
+		$.ajax({
+			url:'https://api.douban.com/v2/movie/in_theaters',
+			type:'GET',
+			dataType:'jsonp',
+			jsonp:'jsonpcallback',
+			data:{
+				city:'北京'
+			},
+			success:function(data){
+				// 获取三个正在上映的电影()
+				var obj=data.subjects.slice(0,3);
+				// tmpl("J_OngoingListTmpl",obj);
+				$("#J_OnGoing").append(tmpl("J_OngoingListTmpl",obj));
+				var htm=score($(".file-score").attr("data-score"));
+				$(".file-score").html(htm);
+			}
+		})
+		
+		// 近期热门
+		$.ajax({
+			url:'https://api.douban.com/v2/movie/us_box',
+			type:'GET',
+			dataType:'jsonp',
+			jsonp:'jsonpcallback',
+			success:function(data){
+				var obj=data.subjects.slice(0,3);
+				
+				$("#J_Recent").append(tmpl("J_RecentListTmpl",obj));
 
-		}
-	})
-	
-	// 近期热门
-	$.ajax({
-		url:'https://api.douban.com/v2/movie/us_box',
-		type:'GET',
-		dataType:'jsonp',
-		jsonp:'jsonpcallback',
-		success:function(data){
-			var obj=data.subjects.slice(0,3);
-			
-			$("#J_Recent").append(tmpl("J_RecentListTmpl",obj));
+			}
+		})
 
-		}
-	})
+	},
+	bind:function(){
+		this.bindEvent();
+	},
+	bindEvent:function(){
+		// 导航栏
+		$("#J_TopNav").on("tap",function(){
+			if($("#J_Slide").hasClass('active')){
+				$("#J_Slide").removeClass('active').css("transform",'translateX(-100%)');
+				$("#J_Main").css("transform",'translateX(0%)');
+			}else{
+				$("#J_Slide").addClass('active').css("transform",'translateX(100%)');
+				$("#J_Main").css("transform",'translateX(80%)');
+			}
+		})
+	}
 
-	// 导航栏
-	$("#J_TopNav").on("tap",function(){
-		if($("#J_Slide").hasClass('active')){
-			$("#J_Slide").removeClass('active').css("transform",'translateX(-100%)');
-			$("#J_Main").css("transform",'translateX(0%)');
-		}else{
-			$("#J_Slide").addClass('active').css("transform",'translateX(100%)');
-			$("#J_Main").css("transform",'translateX(80%)');
-		}
-	})
-
-})
+}
 // 评分函数
 		function score(num){
 			var t=(parseInt(num)/100.0).toFixed(2);
@@ -71,5 +85,6 @@ $(function(){
 			}else if(t==1){
 				htm='<span class="rating-stars"><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span><span class="rating-star rating-star-small-full"></span></span>';
 			}
+			// $(".file-score").html(htm);
 			return htm;
 		}

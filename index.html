@@ -12,42 +12,7 @@
 		// 模板引擎
 		// Simple JavaScript Templating（讲解用法：http://www.cnblogs.com/dolphinX/p/3489269.html）
 		// John Resig - hhttp://ejohn.org/blog/javascript-micro-templating/ - MIT Licensed
-		(function(){
-		  var cache = {};
-		 
-		  this.tmpl = function tmpl(str, data){
-		    // Figure out if we're getting a template, or if we need to
-		    // load the template - and be sure to cache the result.
-		    var fn = !/\W/.test(str) ?
-		      cache[str] = cache[str] ||
-		        tmpl(document.getElementById(str).innerHTML) :
-		     
-		      // Generate a reusable function that will serve as a template
-		      // generator (and which will be cached).
-		      new Function("obj",
-		        "var p=[],print=function(){p.push.apply(p,arguments);};" +
-		       
-		        // Introduce the data as local variables using with(){}
-		        "with(obj){p.push('" +
-		       
-		        // Convert the template into pure JavaScript
-		        str
-		          .replace(/[\r\t\n]/g, " ")
-		          .split("<%").join("\t")
-		          .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-		          .replace(/\t=(.*?)%>/g, "',$1,'")
-		          .split("\t").join("');")
-		          .split("%>").join("p.push('")
-		          .split("\r").join("\\'")
-		      + "');}return p.join('');");
-		   
-		    // Provide some basic currying（局部套用） to the user
-		    return data ? fn( data ) : fn;
-
-		  };
-		})();
-
-
+		(function(){var cache={};this.tmpl=function tmpl(str,data){var fn=!/\W/.test(str)?cache[str]=cache[str]||tmpl(document.getElementById(str).innerHTML):new Function("obj","var p=[],print=function(){p.push.apply(p,arguments);};"+"with(obj){p.push('"+str.replace(/[\r\t\n]/g," ").split("<%").join("\t").replace(/((^|%>)[^\t]*)'/g,"$1\r").replace(/\t=(.*?)%>/g,"',$1,'").split("\t").join("');").split("%>").join("p.push('").split("\r").join("\\'")+"');}return p.join('');");return data?fn(data):fn;};})();
 	</script>
 </head>
 <body>
@@ -70,7 +35,7 @@
 							<a data-id="<%=obj[i].id%>" class="list-info" href="<%=obj[i].alt%>">
 								<img class="file-img" src="<%=obj[i].images.small%>">
 								<span class="file-name"><%=obj[i].title%></span>
-								<span class="file-score">score(<%=obj[i].rating.stars%>)</span>
+								<span class="file-score" data-score="<%=obj[i].rating.stars%>"></span>
 							</a>
 							<a class="list-choose" href="https://movie.douban.com/subject/"'+<%=obj[i].id%>+'"/cinema/">选座购票</a>
 						</li>
@@ -119,27 +84,6 @@
 				<span></span>
 			</a>
 			<ul id="J_ComtList" class="comt-list">
-				<li>
-					<a href="" class="comt-wrap">
-						<div class="cont">
-							<div class="img">
-								<img src="./img/1.jpg" alt="">
-							</div>
-							<div class="cont-detail">
-								<h3>这个脑袋不太超</h3>
-								<div>
-								
-								</div>
-							</div>
-						</div>
-						<div class="comt">
-							<span class="comt-author">奔跑忘记忧伤</span>
-							<span>评论</span>
-							<span class="comt-cite">《超脑48小时》</span>
-							<span class="comt-score"></span>
-						</div>
-					</a>
-				</li>
 				<li>
 					<a href="" class="comt-wrap">
 						<div class="cont">
